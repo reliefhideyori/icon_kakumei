@@ -1,0 +1,131 @@
+Slide Icon Generator (MVP) - 開発要件定義書
+Version: 1.0 Status: Draft Author: User & Gemini
+1. プロジェクト概要
+1.1 目的
+スライド資料作成において、ノンデザイナーでも「統一感」のある「高品質」なアイコン素材を、プロンプト作成の手間なく即座に生成できるWebアプリケーションを開発する。
+1.2 コアバリュー
+No Prompting: ユーザーは「単語（モチーフ）」を入力するだけ。
+Consistency: スタイル固定により、いつ生成しても同じトンマナ（Tone & Manner）を維持。
+Usability: すべて白背景・正方形・フラットデザインで出力され、資料に即貼り付け可能。
+
+2. システムアーキテクチャ
+API_KEY = "AIzaSyDL6b8SL3mRjw9_sWwZcxHLVhoYdxZhEU0" # 
+client = genai.Client(api_key=API_KEY)
+
+#使用モデル
+TEXT_MODEL = "nano-banana-pro-preview"  # リストに実在！
+IMAGE_MODEL = "imagen-4.0-generate-001" # 次世代モデル
+
+3. UI/UX 機能要件
+3.1 入力エリア (Input Panel)
+モチーフ入力フォーム (InputText)
+ユーザーが描画対象を入力（例：「ロケット」「握手」「PDCA」）。
+プレースホルダー：「描きたいモノを入力（例: 電球, チームワーク）」
+スタイル選択 (RadioGroup / CardSelection)
+以下の3つから選択（デフォルトはComic Pop）。
+A. アメコミ: 派手、原色、ドット絵。
+B. モダン: 重厚、シルエット、視認性重視。
+生成ボタン (Button)
+ラベル：「アイコンを生成する」
+状態：クリックでLoading表示（スピナー）。生成完了まで非活性化。
+3.2 出力エリア (Result Panel)
+プレビュー表示
+生成された画像を 512x512 以上のサイズで表示。
+アスペクト比は 1:1 固定。
+ダウンロード (Button)
+生成された画像をPNG形式でダウンロード。
+
+4. バックエンド・ロジック要件 (Core Logic)
+4.1 処理フロー
+受信: Frontendから {motif (日本語)} と {style_id} を受け取る。Style_idはプルダウンで簡単に選択できるUI。
+翻訳 (Translation Layer):
+motif が日本語の場合、Gemini Pro を使用して「視覚的な英単語（Visual Noun in English）」に変換する。
+Why: Imagen 4 は英語プロンプトの方が、「線の太さ」や「スタイル」の指示をより正確に守るため。
+プロンプト構築 (Prompt Building):
+翻訳された {english_motif} を、選択されたスタイルの英語テンプレートに埋め込む。
+生成実行 (Generation):
+API を叩き、画像を生成する。
+4.2 スタイル定義と英語プロンプト (Constants)
+以下の辞書を定数として保持する。
+Python
+STYLES = {
+    "comic": {
+        "name": "Comic Pop",
+        "prompt_template": """
+Generate a flat, vector-style icon of a {english_motif}.
+Style: Vintage American Pop Art / Retro Comic Book Style (resembling Roy Lichtenstein).
+View: Front view, centered on a white background.
+
+Key Visual Elements:
+- Outlines: EXTREMELY bold, thick, uniform black outlines defining all shapes. No sketch lines.
+- Colors: Strictly limited palette of Cyan, Magenta, Yellow, Red, Black, and Flesh tone.
+- Texture: Visible, coarse Ben-Day dots (halftone pattern) on colored areas to simulate vintage printing.
+- Shading: Flat shading only. No gradients.
+- Composition: The object is completely isolated in the center.
+- Background: Pure solid white (#FFFFFF) negative space.
+
+Negative Constraints (Strictly Forbidden):
+- NO background elements (ABSOLUTELY NO sunbursts, NO speed lines, NO explosion effects, NO comic panels).
+- NO text, speech bubbles, words, or typography.
+- NO 3D rendering, realistic textures, or photo-realism.
+- NO frames or borders around the edges.
+"""
+    },
+    "outline": {
+        "name": "Minimal Outline",
+        "prompt_template": """
+Generate a minimalist line icon of a {english_motif}.
+Style: Modern UI Icon / Outline Style (like Apple SF Symbols).
+View: Front view, centered on a white background.
+
+Key Visual Elements:
+- Lines: Uniform, medium-weight black strokes (#000000).
+- Shape: Geometric, clean, and simplified. Rounded corners/caps for a friendly look.
+- Fill: No fill (transparent/white).
+- Background: Pure solid white (#FFFFFF).
+- Composition: The object is isolated in the center. Square aspect ratio.
+
+Negative constraints:
+- Do not include text, shadows, or colors.
+- Do not use sketch styles or rough lines.
+- Do not use complex details.
+"""
+    },
+    "solid": {
+        "name": "Minimal Solid",
+        "prompt_template": """
+Generate a minimalist glyph icon of a {english_motif}.
+Style: Modern UI Icon / Solid (Filled) Style (like Material Design).
+View: Front view, centered on a white background.
+
+Key Visual Elements:
+- Fill: Solid black (#000000) silhouette.
+- Shape: Strong, bold, geometric shapes. High contrast.
+- Details: Simplified to the bare essentials.
+- Background: Pure solid white (#FFFFFF).
+- Composition: The object is isolated in the center. Square aspect ratio.
+
+Negative constraints:
+- Do not include outlines or strokes.
+- Do not include text, internal details, or gradients.
+- Do not use 3D effects or shadows.
+"""
+    }
+}
+4.3 APIパラメータ設定
+Model: imagen-3.0-generate-001
+Parameters:
+aspect_ratio: '1:1' (必須)
+number_of_images: 1
+safety_filter_level: block_some (または誤検知が多い場合は調整)
+
+5. エラーハンドリング
+Safety Blocking: プロンプトが暴力的・性的な内容と判定された場合、APIは画像を返さない。この場合、「不適切なワードが含まれている可能性があります。別の言葉をお試しください。」というUIメッセージを表示する。
+API Timeouts: 30秒以上の待機が発生した場合、タイムアウト処理を行う。
+
+6. 実装ステップ（AIへの指示用）
+Project Setup: React + Backend環境の構築。
+API Integration: Google Gen AI SDKの導入と、上記の STYLES 定数の実装。
+UI Construction: 入力フォームと結果表示のコンポーネント作成。
+Logic Implementation: Japanese Input -> Translation -> Prompt Construction -> Image Gen のパイプライン実装。
+Testing: 「ロケット」「アイデア」「チーム」などの単語で、3つのスタイルが正しく出力されるか確認。

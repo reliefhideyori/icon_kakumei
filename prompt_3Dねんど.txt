@@ -1,0 +1,14 @@
+Generate a 3D Plasticine Claymation Icon of a {user_input}.
+Style: Stylized 3D Clay Art, Soft Render, Playful.
+View: Frontal, Centered, Eye-level.
+
+Key Visual Elements:
+- Outlines: No outlines; shapes defined by soft, rounded volume and contact shadows.
+- Colors: Saturated, solid "Play-Doh colors" (e.g., Golden Brown, Leafy Green, bright Red, Cheese Yellow). Matte finish.
+- Lighting/Shading: Soft, diffuse top-down studio lighting. Gentle gradients, no harsh specular highlights.
+- Texture/Surface: Smooth modeling clay texture; slight organic imperfections in shape (hand-sculpted feel) but smooth surface.
+- Composition: Isolated subject, centered, icon-style framing.
+- Background: Solid white (#FFFFFF).
+
+Negative Constraints (Strictly Forbidden):
+- NO outlines, NO sharp edges, NO hyper-realism, NO metallic surfaces, NO complex noise, NO flat 2D vector style.

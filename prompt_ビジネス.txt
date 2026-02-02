@@ -1,0 +1,14 @@
+Generate a Corporate Duotone Vector Icon of a {user_input}.
+Style: Flat Business Iconography, Glyph Style.
+View: Frontal, 2D, Graphic Design.
+
+Key Visual Elements:
+- Outlines: Combination of solid silhouette fills and uniform thick lines with rounded ends.
+- Colors: Strict Duotone: Deep Navy Blue (#003366) for primary elements, Vibrant Cyan (#3399CC) for accents.
+- Lighting/Shading: None. Completely flat color application.
+- Texture/Surface: Digital vector smoothness, sharp geometric shapes.
+- Composition: Minimalist pictogram, symbolic representation, high contrast.
+- Background: Solid white (#FFFFFF).
+
+Negative Constraints (Strictly Forbidden):
+- NO gradients, NO drop shadows, NO 3D rendering, NO photorealism, NO texture, NO complex details.

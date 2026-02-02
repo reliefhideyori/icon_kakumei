@@ -1,0 +1,13 @@
+Generate a [Loose Hand-Drawn Crayon/Marker Illustration] of a {user_input}.
+Style: Japanese "Heta-uma" (clumsy-cute) aesthetic, Scribble art, Child-like drawing style, Minimalist Doodle.
+View: Front-on, Isolated, Centered.
+
+Key Visual Elements:
+- Outlines: Thick, dark brown (#594A3F), rugged, textured strokes. Lines are uneven, wobbly, and occasionally broken or dashed, resembling a worn felt-tip pen or crayon.
+- Colors: Soft, warm, desaturated pastels. Pale cream, muted beige, soft grey-blue. Low contrast.
+- Lighting/Shading: Flat 2D application. No realistic shadows. "Shading" is represented by crude, loose scribbles or patches of darker color within the shapes (e.g. rough stippling).
+- Texture/Surface: Textured brush appearance (crayon or dry marker) on a smooth surface. Imperfect fill.
+- Background: Solid, very pale dusty pink/cream (#F8F0EC).
+
+Negative Constraints (Strictly Forbidden):
+- NO 3D effects, NO gradients, NO glossy finishes, NO sharp vector lines, NO high saturation, NO realistic lighting, NO complex details, NO fine lines.

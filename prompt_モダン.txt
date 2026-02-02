@@ -1,0 +1,17 @@
+PROMPT_MINIMAL_OUTLINE = """
+Generate a minimalist line icon of a {user_input}.
+Style: Modern UI Icon / Outline Style (like Apple SF Symbols).
+View: Front view, centered on a white background.
+
+Key Visual Elements:
+- Lines: Uniform, medium-weight black strokes (#000000).
+- Shape: Geometric, clean, and simplified. Rounded corners/caps for a friendly look.
+- Fill: No fill (transparent/white).
+- Background: Pure solid white (#FFFFFF).
+- Composition: The object is isolated in the center. Square aspect ratio.
+
+Negative constraints:
+- Do not include text, shadows, or colors.
+- Do not use sketch styles or rough lines.
+- Do not use complex details.
+"""

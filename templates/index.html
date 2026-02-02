@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アイコン革命 | 1発で思い通りのアイコンを生成</title>
+    <meta name="description" content="もう何度も生成し直す必要はありません。アイコン革命なら、1発で思い通りのアイコンを生成できます。">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- ナビゲーション -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <img src="{{ url_for('static', filename='images/アイコン革命ロゴ.png') }}" alt="アイコン革命" class="logo-image">
+                <span class="logo-text">アイコン革命</span>
+            </a>
+            <div class="nav-links">
+                <a href="#features">特徴</a>
+                <a href="#generator">生成する</a>
+                <a href="#faq">FAQ</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ヒーローセクション -->
+    <section class="hero">
+        <div class="hero-bg-effects">
+            <div class="hero-glow hero-glow-1"></div>
+            <div class="hero-glow hero-glow-2"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">🎯 プロンプト不要・一発生成</div>
+            <h1 class="hero-title">
+                <span class="hero-title-accent">アイコン革命</span>
+            </h1>
+            <p class="hero-subtitle">
+                生成例から思い通りのアイコンを生成！<br>
+                スライド作りに不可欠な世界観の統一されたアイコンを１発生成！
+            </p>
+            <div class="hero-cta">
+                <a href="#generator" class="btn-primary">
+                    <span>今すぐ生成する</span>
+                    <span class="btn-arrow">→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特徴セクション -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">FEATURES</span>
+                <h2 class="section-title">アイコン革命が選ばれる理由</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">1発で決まる精度</h3>
+                    <p class="feature-desc">厳選されたプロンプト設計により、何度も生成し直す必要がありません。最初の1回で思い通りのアイコンが完成します。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✍️</div>
+                    <h3 class="feature-title">日本語入力OK</h3>
+                    <p class="feature-desc">難しい英語プロンプトは不要。「ロケット」「電球」など、日本語で入力するだけで美しいアイコンが生成されます。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3 class="feature-title">統一感のあるデザイン</h3>
+                    <p class="feature-desc">スタイルを選ぶだけで、いつでも同じトーン&マナーのアイコンを生成。スライド資料に統一感が生まれます。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 生成セクション -->
+    <section class="generator-section" id="generator">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">GENERATE</span>
+                <h2 class="section-title">アイコンを生成する</h2>
+            </div>
+
+            <div class="generator-wrapper">
+                <!-- 入力パネル -->
+                <div class="input-panel">
+                    <h3 class="panel-title">設定</h3>
+
+                    <!-- モチーフ入力 -->
+                    <div class="form-group">
+                        <label for="motif" class="label">モチーフ</label>
+                        <input type="text" id="motif" class="input" placeholder="例: ロケット、電球、握手、チームワーク"
+                            autocomplete="off">
+                    </div>
+
+                    <!-- スタイル選択 -->
+                    <div class="form-group">
+                        <label class="label">スタイル</label>
+                        <div class="style-cards">
+                            {% for style_id, style in styles.items() %}
+                            <label class="style-card" data-style="{{ style_id }}">
+                                <input type="radio" name="style" value="{{ style_id }}" {% if loop.first %}checked{%
+                                    endif %}>
+                                <div class="style-card-content">
+                                    <img src="{{ url_for('static', filename=style.image) }}" alt="{{ style.name }}"
+                                        class="style-image">
+                                    <div class="style-info">
+                                        <span class="style-name">{{ style.name }}</span>
+                                        <span class="style-desc">{{ style.description }}</span>
+                                    </div>
+                                </div>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- 生成ボタン -->
+                    <button id="generate-btn" class="btn-generate">
+                        <span class="btn-text">✨ アイコンを生成する</span>
+                        <span class="btn-loading">
+                            <span class="spinner"></span>
+                            生成中...
+                        </span>
+                    </button>
+                </div>
+
+                <!-- 結果パネル -->
+                <div class="result-panel" id="result-panel">
+                    <h3 class="panel-title">生成結果</h3>
+
+                    <!-- プレースホルダー -->
+                    <div class="result-placeholder" id="result-placeholder">
+                        <div class="placeholder-icon">🖼️</div>
+                        <p>左のパネルからモチーフを入力して<br>アイコンを生成してください</p>
+                    </div>
+
+                    <!-- 結果表示 -->
+                    <div class="result-content" id="result-content" style="display: none;">
+                        <div class="result-image-wrapper">
+                            <img id="result-image" src="" alt="生成されたアイコン" class="result-image">
+                        </div>
+                        <div class="result-info">
+                            <p><strong>モチーフ:</strong> <span id="result-motif"></span></p>
+                            <p><strong>英語翻訳:</strong> <span id="result-english"></span></p>
+                            <p><strong>スタイル:</strong> <span id="result-style"></span></p>
+                        </div>
+                        <button id="download-btn" class="btn-download">
+                            📥 PNGでダウンロード
+                        </button>
+                    </div>
+
+                    <!-- エラー表示 -->
+                    <div class="result-error" id="result-error" style="display: none;">
+                        <div class="error-icon">⚠️</div>
+                        <p id="error-message"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQセクション -->
+    <section class="faq-section" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">FAQ</span>
+                <h2 class="section-title">よくある質問</h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Q. 料金はかかりますか？</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>現在は完全無料でご利用いただけます。会員登録も不要です。</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Q. 生成したアイコンは商用利用できますか？</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>はい、生成したアイコンはプレゼン資料、ウェブサイト、SNSなど商用利用を含めて自由にお使いいただけます。</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Q. どんなスタイルがありますか？</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>現在は「アメコミ（Comic Pop）」と「モダン（Minimal Outline）」の2スタイルをご用意しています。今後も追加予定です。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-icon">⚡</span>
+                    <span class="logo-text">アイコン革命</span>
+                </div>
+                <p class="footer-tagline">1発で思い通りのアイコンを生成</p>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 アイコン革命. Powered by Google Imagen 4.0</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+
+</html>

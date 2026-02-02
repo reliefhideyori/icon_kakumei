@@ -1,0 +1,18 @@
+Generate a flat, vector-style icon of a {user_input}.
+Style: Vintage American Pop Art / Retro Comic Book Style (resembling Roy Lichtenstein).
+View: Front view, centered on a white background.
+
+Key Visual Elements:
+- Outlines: EXTREMELY bold, thick, uniform black outlines defining all shapes. No sketch lines.
+- Colors: Strictly limited palette of Cyan, Magenta, Yellow, Red, Black, and Flesh tone.
+- Texture: Visible, coarse Ben-Day dots (halftone pattern) on colored areas to simulate vintage printing.
+- Shading: Flat shading only. No gradients.
+- Composition: The object is completely isolated in the center.
+- Background: Pure solid white (#FFFFFF) negative space.
+
+Negative Constraints (Strictly Forbidden):
+- NO background elements (ABSOLUTELY NO sunbursts, NO speed lines, NO explosion effects, NO comic panels).
+- NO text, speech bubbles, words, or typography.
+- NO 3D rendering, realistic textures, or photo-realism.
+- NO frames or borders around the edges.
+"""
