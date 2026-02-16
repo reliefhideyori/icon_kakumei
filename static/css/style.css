@@ -477,127 +477,193 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 800px;
-    height: 800px;
+    width: 100%;
+    height: 100%;
     transform: translate(-50%, -50%);
     z-index: 0;
     pointer-events: none;
+    overflow: hidden;
 }
 
 .hero-icon {
     position: absolute;
     opacity: 1;
-    /* 不透明 */
-    /* filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); */
-    width: 80px;
-    height: 80px;
+    width: 150px;
+    /* Big Size */
+    height: 150px;
     object-fit: contain;
-    animation: celebrate 3s ease-in-out infinite;
+    animation: celebrate 4s ease-in-out infinite;
+    /* filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); */
 }
 
 /* 
-   Balanced Layout (Avoiding Center Content)
-   Distribute icons to corners/sides
+   Frame Layout (Surrounding the screen)
 */
 
-/* --- Top Left Area --- */
+/* --- Top Edge (1-6) --- */
 .icon-1 {
-    top: 10%;
+    top: -20px;
     left: 5%;
-    animation-duration: 4s;
     animation-delay: 0s;
 }
 
 .icon-2 {
-    top: 25%;
-    left: 12%;
-    width: 60px;
-    animation-duration: 3.5s;
+    top: 5%;
+    left: 20%;
     animation-delay: 1.5s;
+    width: 130px;
 }
 
 .icon-3 {
-    top: 8%;
-    left: 20%;
-    width: 90px;
-    animation-duration: 4.5s;
+    top: -10px;
+    left: 35%;
     animation-delay: 0.5s;
 }
 
-/* --- Top Right Area --- */
 .icon-4 {
-    top: 12%;
-    right: 5%;
-    width: 100px;
-    animation-duration: 4.2s;
-    animation-delay: 1s;
+    top: 5%;
+    left: 50%;
+    animation-delay: 2.0s;
+    width: 140px;
 }
 
 .icon-5 {
-    top: 28%;
-    right: 15%;
-    width: 70px;
-    animation-duration: 3.8s;
-    animation-delay: 2s;
+    top: -15px;
+    left: 65%;
+    animation-delay: 1.0s;
 }
 
 .icon-6 {
     top: 5%;
-    right: 22%;
-    width: 85px;
-    animation-duration: 4.8s;
+    left: 80%;
+    animation-delay: 2.5s;
+    width: 130px;
+}
+
+/* --- Bottom Edge (7-12) --- */
+.icon-7 {
+    bottom: -20px;
+    left: 10%;
     animation-delay: 0.2s;
 }
 
-/* --- Bottom Left Area --- */
-.icon-7 {
-    bottom: 15%;
-    left: 8%;
-    width: 95px;
-    animation-duration: 4.1s;
-    animation-delay: 1.2s;
-}
-
 .icon-8 {
-    bottom: 30%;
-    left: 5%;
-    width: 75px;
-    animation-duration: 3.6s;
-    animation-delay: 2.2s;
+    bottom: 5%;
+    left: 25%;
+    animation-delay: 1.7s;
+    width: 140px;
 }
 
 .icon-9 {
-    bottom: 8%;
-    left: 25%;
-    width: 110px;
-    animation-duration: 5s;
-    animation-delay: 0.8s;
+    bottom: -10px;
+    left: 40%;
+    animation-delay: 0.7s;
 }
 
-/* --- Bottom Right Area --- */
 .icon-10 {
-    bottom: 12%;
-    right: 10%;
-    width: 100px;
-    animation-duration: 4.3s;
-    animation-delay: 1.8s;
+    bottom: 5%;
+    left: 55%;
+    animation-delay: 2.2s;
+    width: 130px;
 }
 
 .icon-11 {
-    bottom: 28%;
-    right: 8%;
-    width: 80px;
-    animation-duration: 3.9s;
-    animation-delay: 0.4s;
+    bottom: -15px;
+    left: 70%;
+    animation-delay: 1.2s;
 }
 
 .icon-12 {
-    bottom: 8%;
-    right: 25%;
-    width: 90px;
-    animation-duration: 4.6s;
-    animation-delay: 1.4s;
+    bottom: 5%;
+    left: 85%;
+    animation-delay: 2.7s;
+    width: 140px;
 }
+
+/* --- Left Edge (13-18) --- */
+.icon-13 {
+    top: 20%;
+    left: 2%;
+    animation-delay: 0.8s;
+    width: 120px;
+}
+
+.icon-14 {
+    top: 35%;
+    left: -2%;
+    animation-delay: 2.3s;
+}
+
+.icon-15 {
+    top: 50%;
+    left: 3%;
+    animation-delay: 1.3s;
+    width: 130px;
+}
+
+.icon-16 {
+    top: 65%;
+    left: -1%;
+    animation-delay: 2.8s;
+}
+
+.icon-17 {
+    top: 80%;
+    left: 4%;
+    animation-delay: 1.8s;
+    width: 120px;
+}
+
+.icon-18 {
+    top: 15%;
+    left: -3%;
+    animation-delay: 3.0s;
+}
+
+/* Extra */
+
+/* --- Right Edge (19-24) --- */
+.icon-19 {
+    top: 20%;
+    right: 2%;
+    animation-delay: 1.0s;
+    width: 120px;
+}
+
+.icon-20 {
+    top: 35%;
+    right: -2%;
+    animation-delay: 2.5s;
+}
+
+.icon-21 {
+    top: 50%;
+    right: 3%;
+    animation-delay: 1.5s;
+    width: 130px;
+}
+
+.icon-22 {
+    top: 65%;
+    right: -1%;
+    animation-delay: 3.0s;
+}
+
+.icon-23 {
+    top: 80%;
+    right: 4%;
+    animation-delay: 2.0s;
+    width: 120px;
+}
+
+.icon-24 {
+    top: 15%;
+    right: -3%;
+    animation-delay: 0.5s;
+}
+
+/* Extra */
+
 
 /* Celebrating Animation (Stronger Scale & Rotate) */
 @keyframes celebrate {
@@ -608,7 +674,7 @@ body {
     }
 
     50% {
-        transform: translateY(-20px) scale(1.4) rotate(10deg);
+        transform: translateY(-20px) scale(1.3) rotate(15deg);
     }
 }
 
