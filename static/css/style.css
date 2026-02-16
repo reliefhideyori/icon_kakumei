@@ -496,95 +496,110 @@ body {
 }
 
 /* 
-   Circular Layout (Radius approx 320px) 
-   Center is 400px, 400px
+   Balanced Layout (Avoiding Center Content)
+   Distribute icons to corners/sides
 */
 
-/* 12時 (0deg) -> top */
+/* --- Top Left Area --- */
 .icon-1 {
-    top: 80px;
-    left: 360px;
+    top: 10%;
+    left: 5%;
+    animation-duration: 4s;
     animation-delay: 0s;
 }
 
-/* 1時 (30deg) */
 .icon-2 {
-    top: 123px;
-    left: 520px;
+    top: 25%;
+    left: 12%;
+    width: 60px;
+    animation-duration: 3.5s;
+    animation-delay: 1.5s;
+}
+
+.icon-3 {
+    top: 8%;
+    left: 20%;
+    width: 90px;
+    animation-duration: 4.5s;
+    animation-delay: 0.5s;
+}
+
+/* --- Top Right Area --- */
+.icon-4 {
+    top: 12%;
+    right: 5%;
+    width: 100px;
+    animation-duration: 4.2s;
+    animation-delay: 1s;
+}
+
+.icon-5 {
+    top: 28%;
+    right: 15%;
+    width: 70px;
+    animation-duration: 3.8s;
+    animation-delay: 2s;
+}
+
+.icon-6 {
+    top: 5%;
+    right: 22%;
+    width: 85px;
+    animation-duration: 4.8s;
     animation-delay: 0.2s;
 }
 
-/* 2時 (60deg) */
-.icon-3 {
-    top: 240px;
-    left: 637px;
-    animation-delay: 0.4s;
-}
-
-/* 3時 (90deg) -> right */
-.icon-4 {
-    top: 400px;
-    left: 680px;
-    animation-delay: 0.6s;
-}
-
-/* 4時 (120deg) */
-.icon-5 {
-    top: 560px;
-    left: 637px;
-    animation-delay: 0.8s;
-}
-
-/* 5時 (150deg) */
-.icon-6 {
-    top: 677px;
-    left: 520px;
-    animation-delay: 1.0s;
-}
-
-/* 6時 (180deg) -> bottom */
+/* --- Bottom Left Area --- */
 .icon-7 {
-    top: 720px;
-    left: 360px;
+    bottom: 15%;
+    left: 8%;
+    width: 95px;
+    animation-duration: 4.1s;
     animation-delay: 1.2s;
 }
 
-/* 7時 (210deg) */
 .icon-8 {
-    top: 677px;
-    left: 200px;
-    animation-delay: 1.4s;
-}
-
-/* 8時 (240deg) */
-.icon-9 {
-    top: 560px;
-    left: 83px;
-    animation-delay: 1.6s;
-}
-
-/* 9時 (270deg) -> left */
-.icon-10 {
-    top: 400px;
-    left: 40px;
-    animation-delay: 1.8s;
-}
-
-/* 10時 (300deg) */
-.icon-11 {
-    top: 240px;
-    left: 83px;
-    animation-delay: 2.0s;
-}
-
-/* 11時 (330deg) */
-.icon-12 {
-    top: 123px;
-    left: 200px;
+    bottom: 30%;
+    left: 5%;
+    width: 75px;
+    animation-duration: 3.6s;
     animation-delay: 2.2s;
 }
 
-/* Celebrating Animation (Bouncing & Rotating) */
+.icon-9 {
+    bottom: 8%;
+    left: 25%;
+    width: 110px;
+    animation-duration: 5s;
+    animation-delay: 0.8s;
+}
+
+/* --- Bottom Right Area --- */
+.icon-10 {
+    bottom: 12%;
+    right: 10%;
+    width: 100px;
+    animation-duration: 4.3s;
+    animation-delay: 1.8s;
+}
+
+.icon-11 {
+    bottom: 28%;
+    right: 8%;
+    width: 80px;
+    animation-duration: 3.9s;
+    animation-delay: 0.4s;
+}
+
+.icon-12 {
+    bottom: 8%;
+    right: 25%;
+    width: 90px;
+    animation-duration: 4.6s;
+    animation-delay: 1.4s;
+}
+
+/* Celebrating Animation (Stronger Scale & Rotate) */
 @keyframes celebrate {
 
     0%,
@@ -593,7 +608,7 @@ body {
     }
 
     50% {
-        transform: translateY(-15px) scale(1.1) rotate(5deg);
+        transform: translateY(-20px) scale(1.4) rotate(10deg);
     }
 }
 
