@@ -22,10 +22,6 @@ except ImportError as e:
     print(f"Installed packages: {installed_packages}")
     raise e
 
-# Vercel用のハンドラー
-def handler(request, response):
-    print(f"Request received: {request.method} {request.path}")
-    return app(request, response)
-
-# Vercel Python runtime用
+# Vercelは自動的に 'app' 変数を探し、WSGIアプリケーションとして扱います。
+# 独自の handler 関数は不要であり、場合によってはVercelのランタイムエラーを引き起こす可能性があります。
 app = app
