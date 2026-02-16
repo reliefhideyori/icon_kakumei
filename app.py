@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 # .envファイルから環境変数を読み込む
 load_dotenv()
 
-from styles import STYLES, TRANSLATION_INSTRUCTION, COMMON_CONSTRAINTS
+from styles import STYLES, COMMON_CONSTRAINTS
 
 # ==========================================
 # 設定
@@ -27,7 +27,6 @@ else:
     print("⚠️ GOOGLE_API_KEY環境変数が設定されていません。画面表示は可能ですが、画像生成は利用できません。")
 
 # モデル設定
-TEXT_MODEL = "gemini-2.0-flash-lite"  # 翻訳用（軽量版・別クォータ）
 IMAGE_MODEL = "gemini-2.0-flash-exp-image-generation"  # 画像生成用（無料利用可能）
 
 app = Flask(__name__)
@@ -59,26 +58,15 @@ def generate():
         if style_id not in STYLES:
             return jsonify({"error": "無効なスタイルです"}), 400
         
-        # Step 1: 日本語 → 英語翻訳
-        print(f"🔍 翻訳中: '{motif}'")
-        try:
-            translation_response = client.models.generate_content(
-                model=TEXT_MODEL,
-                contents=f"{TRANSLATION_INSTRUCTION}\n\nInput: {motif}"
-            )
-            english_motif = translation_response.text.strip()
-            print(f"✨ 翻訳完了: {english_motif}")
-        except Exception as e:
-            print(f"⚠️ 翻訳エラー（フォールバック）: {e}")
-            english_motif = motif  # フォールバック
-        
-        # Step 2: プロンプト構築（共通制約を追加）
+        # Step 1: プロンプト構築（共通制約を追加）
+        # 以前は翻訳ステップがありましたが、レート制限対策のため削除し、
+        # 日本語(または任意の言語)の入力をそのまま使用します。Geminiは多言語対応しています。
         style = STYLES[style_id]
-        style_prompt = style["prompt_template"].format(english_motif=english_motif)
+        style_prompt = style["prompt_template"].format(motif=motif)
         final_prompt = style_prompt + COMMON_CONSTRAINTS
-        print(f"🎨 プロンプト構築完了（共通制約適用）")
+        print(f"🎨 プロンプト構築完了: {final_prompt[:50]}...")
         
-        # Step 3: 画像生成（リトライ付き）
+        # Step 2: 画像生成（リトライ付き）
         max_retries = 2
         retry_delay = 15  # 秒
         last_error = None
@@ -136,7 +124,6 @@ def generate():
             "success": True,
             "image": f"data:image/png;base64,{img_base64}",
             "motif": motif,
-            "english_motif": english_motif,
             "style": style["name"]
         })
         

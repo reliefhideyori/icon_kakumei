@@ -20,7 +20,7 @@ STYLES = {
         "name": "アメコミ (Comic Pop)",
         "description": "派手、原色、ドット絵（ハーフトーン）、太いアウトライン",
         "image": "images/アメコミ.png",
-        "prompt_template": """Generate a flat, vector-style icon of a {english_motif}.
+        "prompt_template": """Generate a flat, vector-style icon of a {motif}.
 Style: Vintage American Pop Art / Retro Comic Book Style (resembling Roy Lichtenstein).
 View: Front view, centered on a white background.
 
@@ -42,7 +42,7 @@ Negative Constraints (Strictly Forbidden):
         "name": "モダン (Minimal Outline)",
         "description": "シンプル、線画、Apple SF Symbols風",
         "image": "images/モダン.png",
-        "prompt_template": """Generate a minimalist line icon of a {english_motif}.
+        "prompt_template": """Generate a minimalist line icon of a {motif}.
 Style: Modern UI Icon / Outline Style (like Apple SF Symbols).
 View: Front view, centered on a white background.
 
@@ -62,7 +62,7 @@ Negative constraints:
         "name": "3Dねんど (Plasticine Clay)",
         "description": "立体的、やわらかい質感、Play-Doh風",
         "image": "images/3Dねんど.png",
-        "prompt_template": """Generate a 3D Plasticine Claymation Icon of a {english_motif}.
+        "prompt_template": """Generate a 3D Plasticine Claymation Icon of a {motif}.
 Style: Stylized 3D Clay Art, Soft Render, Playful.
 View: Frontal, Centered, Eye-level.
 
@@ -81,7 +81,7 @@ Negative Constraints (Strictly Forbidden):
         "name": "ゆるふわ (Loose Crayon)",
         "description": "手描き風、クレヨン、ゆるい線画、へたうま",
         "image": "images/ゆるふわ.png",
-        "prompt_template": """Generate a [Loose Hand-Drawn Crayon/Marker Illustration] of a {english_motif}.
+        "prompt_template": """Generate a [Loose Hand-Drawn Crayon/Marker Illustration] of a {motif}.
 Style: Japanese "Heta-uma" (clumsy-cute) aesthetic, Scribble art, Child-like drawing style, Minimalist Doodle.
 View: Front-on, Isolated, Centered.
 
@@ -99,7 +99,7 @@ Negative Constraints (Strictly Forbidden):
         "name": "ビジネス (Corporate Duotone)",
         "description": "フラット、企業向けピクトグラム、紺×シアン2色",
         "image": "images/ビジネス.png",
-        "prompt_template": """Generate a Corporate Duotone Vector Icon of a {english_motif}.
+        "prompt_template": """Generate a Corporate Duotone Vector Icon of a {motif}.
 Style: Flat Business Iconography, Glyph Style.
 View: Frontal, 2D, Graphic Design.
 
@@ -116,13 +116,3 @@ Negative Constraints (Strictly Forbidden):
     }
 }
 
-# 翻訳用のシステムプロンプト
-TRANSLATION_INSTRUCTION = """You are a visual translator.
-Convert the user's Japanese input into a concise, visual English noun or phrase suitable for icon generation.
-Output ONLY the English translation, nothing else.
-Examples:
-- "ロケット" -> "rocket"
-- "握手" -> "handshake"
-- "アイデア" -> "light bulb representing idea"
-- "チームワーク" -> "team of people working together"
-"""

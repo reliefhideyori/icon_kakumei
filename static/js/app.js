@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultError = document.getElementById('result-error');
     const resultImage = document.getElementById('result-image');
     const resultMotif = document.getElementById('result-motif');
-    const resultEnglish = document.getElementById('result-english');
     const resultStyle = document.getElementById('result-style');
     const downloadBtn = document.getElementById('download-btn');
     const errorMessage = document.getElementById('error-message');
@@ -99,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             resultImage.src = data.image;
             resultMotif.textContent = data.motif;
-            resultEnglish.textContent = data.english_motif;
             resultStyle.textContent = data.style;
 
             showResult();
