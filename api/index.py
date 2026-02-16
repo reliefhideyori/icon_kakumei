@@ -13,6 +13,7 @@ from app import app
 
 # Vercel用のハンドラー
 def handler(request, response):
+    print(f"Request received: {request.method} {request.path}")
     return app(request, response)
 
 # Vercel Python runtime用

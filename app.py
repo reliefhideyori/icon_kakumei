@@ -3,6 +3,7 @@ Slide Icon Generator - Flask API Server
 """
 import os
 import base64
+import time
 from io import BytesIO
 from flask import Flask, render_template, request, jsonify
 from google import genai
@@ -19,13 +20,15 @@ from styles import STYLES, TRANSLATION_INSTRUCTION, COMMON_CONSTRAINTS
 # 設定
 # ==========================================
 API_KEY = os.environ.get("GOOGLE_API_KEY")
-if not API_KEY:
-    raise ValueError("GOOGLE_API_KEY環境変数が設定されていません")
-client = genai.Client(api_key=API_KEY)
+client = None
+if API_KEY:
+    client = genai.Client(api_key=API_KEY)
+else:
+    print("⚠️ GOOGLE_API_KEY環境変数が設定されていません。画面表示は可能ですが、画像生成は利用できません。")
 
 # モデル設定
-TEXT_MODEL = "gemini-2.0-flash"  # 翻訳用（安定版）
-IMAGE_MODEL = "imagen-4.0-generate-001"  # 画像生成用
+TEXT_MODEL = "gemini-2.0-flash-lite"  # 翻訳用（軽量版・別クォータ）
+IMAGE_MODEL = "gemini-2.0-flash-exp-image-generation"  # 画像生成用（無料利用可能）
 
 app = Flask(__name__)
 
@@ -43,6 +46,9 @@ def index():
 def generate():
     """アイコンを生成するAPIエンドポイント"""
     try:
+        if not client:
+            return jsonify({"error": "GOOGLE_API_KEYが設定されていません。.envファイルにAPIキーを設定してください。"}), 503
+
         data = request.get_json()
         motif = data.get("motif", "").strip()
         style_id = data.get("style", "comic")
@@ -72,24 +78,53 @@ def generate():
         final_prompt = style_prompt + COMMON_CONSTRAINTS
         print(f"🎨 プロンプト構築完了（共通制約適用）")
         
-        # Step 3: 画像生成
-        print(f"🚀 {IMAGE_MODEL} で画像生成中...")
-        response = client.models.generate_images(
-            model=IMAGE_MODEL,
-            prompt=final_prompt,
-            config=types.GenerateImagesConfig(
-                number_of_images=1,
-                aspect_ratio="1:1",
-                output_mime_type="image/png"
-            )
-        )
+        # Step 3: 画像生成（リトライ付き）
+        max_retries = 2
+        retry_delay = 15  # 秒
+        last_error = None
         
-        if not response.generated_images:
-            return jsonify({"error": "画像が生成されませんでした。別の言葉をお試しください。"}), 500
+        for attempt in range(max_retries + 1):
+            try:
+                print(f"🚀 {IMAGE_MODEL} で画像生成中... (試行 {attempt + 1}/{max_retries + 1})")
+                response = client.models.generate_content(
+                    model=IMAGE_MODEL,
+                    contents=final_prompt,
+                    config=types.GenerateContentConfig(
+                        response_modalities=["IMAGE", "TEXT"]
+                    )
+                )
+                
+                # レスポンスから画像パートを探す
+                image_data = None
+                if response.candidates and response.candidates[0].content and response.candidates[0].content.parts:
+                    for part in response.candidates[0].content.parts:
+                        if part.inline_data and part.inline_data.mime_type.startswith("image/"):
+                            image_data = part.inline_data.data
+                            break
+                
+                if image_data:
+                    break  # 成功
+                else:
+                    last_error = "画像データが含まれていませんでした"
+                    print(f"⚠️ 画像データなし（試行 {attempt + 1}）")
+                    
+            except Exception as e:
+                last_error = str(e)
+                if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
+                    if attempt < max_retries:
+                        print(f"⏳ レート制限のため {retry_delay}秒後にリトライします...")
+                        time.sleep(retry_delay)
+                        continue
+                    else:
+                        return jsonify({"error": "APIのレート制限に達しました。1分ほど待ってから再度お試しください。"}), 429
+                else:
+                    raise
+        
+        if not image_data:
+            return jsonify({"error": f"画像が生成されませんでした。別の言葉をお試しください。({last_error})"}), 500
         
         # 画像をBase64エンコード
-        gen_img = response.generated_images[0]
-        image = Image.open(BytesIO(gen_img.image.image_bytes))
+        image = Image.open(BytesIO(image_data))
         
         buffered = BytesIO()
         image.save(buffered, format="PNG")
